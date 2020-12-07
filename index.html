@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>cadotsch.ch</title>
+    <meta name="description" content="Cadotsch"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Overpass', sans-serif;
+        background-color: #f8f9fb;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      main {
+        padding: 1rem;
+      }
+      @media (min-width: 1200px) {
+        main {
+          max-width: 30vw;
+        } 
+      }
+      h1 {
+        font-size: 3rem;
+        color: #333333;
+      }
+      p {
+        font-size: 1.5rem;
+      }
+      a {
+        text-decoration: none;
+        color: #c75723;
+      }
+      .blurry {
+        filter: blur(0.5px);
+      }
+      .yawning {
+        display: inline-block;
+        word-wrap: break-word;
+      }
+      .hard {
+        display: none;
+        opacity: 0;
+
+        transition: opacity 2s ease-out;
+      }
+      .hard-shown {
+        display: initial;
+      }
+      .hard-shown-2 {
+        opacity: 1;
+      }
+      .soft-hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <main>
+          <img src="cadotsch.svg" alt="wappen@cadotsch.ch" width="50%">
+          <h1>cadotsch.ch</h1>
+          <p>Imagin to have a mail address like <br><span id="doing-this-right-now"></span>@cadotsch.ch</p>
+          <p>Just drop me a <a href="mailto:michel@cadotsch.ch">message <img src="envelope.svg" alt="michel@cadotsch.ch"></a></p>
+          <p>I can setup an alias and the email forwarding for you.</p>
+        </main>
+      </div>
+    </div>
+    <script>
+      var $ = {
+        doingThisRightNow: document.querySelector('#doing-this-right-now'),
+        yawn: document.querySelector('#yawn'),
+        yawningW: document.querySelector('#yawning-w'),
+        yawningN: document.querySelector('#yawning-n'),
+      };
+
+      var $$ = {
+        hard: document.querySelectorAll('.hard'),
+        soft: document.querySelectorAll('.soft'),
+      };
+
+      function randomElement(enumerable) {
+        return enumerable[~~(enumerable.length * Math.random())];
+      }
+
+      var thingsIAmDoing = [
+        'griselda',
+        'superman',
+        'fattony',
+        'lulu',
+        'fritz',
+        'chaschperli',
+        'loeli'
+      ];
+
+      function setThingIAmDoingText(thing) {
+        $.doingThisRightNow.textContent = thing;
+      }
+
+      (function() {
+        setThingIAmDoingText(randomElement(thingsIAmDoing));
+      })();
+    </script>
+    <script>
+      function randomAt(avg, offset) {
+        return avg - offset + Math.random() * (offset * 2);
+      }
+
+      function* range(stop) {
+        for (let i = 0; i < stop; i++) {
+          yield i;
+        }
+      }
+
+      function repeat(count, getter) {
+        return Array.from(range(count))
+          .map(getter)
+          .join('');
+      }
+
+      async function animationFrame() {
+        return new Promise(resolve => requestAnimationFrame(resolve));
+      }
+
+      async function timeout(timeout) {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+      }
+
+      (function() {
+        function shuffleThingsIAmDoingInterval() {
+          return randomAt(12, 4) * 1000;
+        }
+
+        function initialShuffleThingsIAmDoingInterval() {
+          return randomAt(5, 1) * 1000;
+        }
+
+        function thingsIAmDoingShuffleRuntime() {
+          return randomAt(3, 1) * 1000;
+        }
+
+        function getGlibberish(length) {
+          const FIRST_WORD_LENGTH = 3;
+
+          const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+          const ALPHABET2 = 'abcdefghijklmnopqrstuvwxyz';
+          return (
+            repeat(FIRST_WORD_LENGTH, () => randomElement(ALPHABET)) +
+            '' +
+            repeat(length - FIRST_WORD_LENGTH - 1, () =>
+              randomElement(ALPHABET2)
+            )
+          );
+        }
+
+        async function* streamGibberish(currentLength, targetLength) {
+          const runtime = thingsIAmDoingShuffleRuntime();
+          const start = performance.now();
+          while (performance.now() - start <= runtime) {
+            const t = (performance.now() - start) / runtime;
+
+            const length = currentLength + t * (targetLength - currentLength);
+            yield getGlibberish(length);
+
+            const waitCount = ~~(Math.abs(t - 0.5) * 10) + 1;
+
+            for (let i = 0; i < waitCount; i++) {
+              await animationFrame();
+            }
+          }
+        }
+
+        async function gibberishifyThingIAmDoing(currentLength, targetLength) {
+          for await (const gibberish of streamGibberish(
+            currentLength,
+            targetLength
+          )) {
+            setThingIAmDoingText(gibberish);
+          }
+        }
+
+        async function shuffleThingIAmDoing() {
+          const current = $.doingThisRightNow.textContent;
+          let target;
+
+          do {
+            target = randomElement(thingsIAmDoing);
+          } while (target === current);
+
+          $.doingThisRightNow.classList.add('blurry');
+          await gibberishifyThingIAmDoing(current.length, target.length);
+
+          setThingIAmDoingText(target);
+          $.doingThisRightNow.classList.remove('blurry');
+
+          setTimeout(shuffleThingIAmDoing, shuffleThingsIAmDoingInterval());
+        }
+
+        setTimeout(
+          shuffleThingIAmDoing,
+          initialShuffleThingsIAmDoingInterval()
+        );
+      })();
+    </script>
+  </body>
+</html>
