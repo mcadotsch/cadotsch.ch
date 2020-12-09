@@ -5,6 +5,8 @@
     <meta name="description" content="Cadotsch"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500&family=Philosopher&display=swap" rel="stylesheet">
     <style>
       body {
         margin: 0;
@@ -27,7 +29,9 @@
         } 
       }
       h1 {
-        font-size: 3rem;
+        font-size: 4rem;
+        font-family: 'Grenze Gotisch', cursive;
+        font-family: 'Philosopher', sans-serif;
         color: #333333;
       }
       p {
@@ -149,8 +153,8 @@
         function getGlibberish(length) {
           const FIRST_WORD_LENGTH = 3;
 
-          const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
-          const ALPHABET2 = 'abcdefghijklmnopqrstuvwxyz';
+          const ALPHABET = 'cadotsch';
+          const ALPHABET2 = 'cadotsch';
           return (
             repeat(FIRST_WORD_LENGTH, () => randomElement(ALPHABET)) +
             '' +
