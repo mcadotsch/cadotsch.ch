@@ -69,9 +69,9 @@
     <div class="container">
       <div class="left">
         <main>
-          <img src="cadotsch.svg" alt="wappen@cadotsch.ch" width="50%">
+          <img src="cadotsch.svg" alt="michel@cadotsch.ch" width="50%">
           <h1>cadotsch.ch</h1>
-          <p>Imagin to have a mail address like <br><span id="doing-this-right-now"></span>@cadotsch.ch</p>
+          <p>Imagin to have a mail address like <br><span id="randomly-mail-alias"></span>@cadotsch.ch</p>
           <p>Just drop me a <a href="mailto:michel@cadotsch.ch">message <img src="envelope.svg" alt="michel@cadotsch.ch"></a></p>
           <p>I can setup an alias and the email forwarding for you.</p>
         </main>
@@ -79,7 +79,7 @@
     </div>
     <script>
       var $ = {
-        doingThisRightNow: document.querySelector('#doing-this-right-now'),
+        randomlyMailAlias: document.querySelector('#randomly-mail-alias'),
         yawn: document.querySelector('#yawn'),
         yawningW: document.querySelector('#yawning-w'),
         yawningN: document.querySelector('#yawning-n'),
@@ -94,7 +94,7 @@
         return enumerable[~~(enumerable.length * Math.random())];
       }
 
-      var thingsIAmDoing = [
+      var ranMailAlias = [
         'griselda',
         'superman',
         'fattony',
@@ -104,12 +104,12 @@
         'loeli'
       ];
 
-      function setThingIAmDoingText(thing) {
-        $.doingThisRightNow.textContent = thing;
+      function setRanMailAliasText(alias) {
+        $.randomlyMailAlias.textContent = alias;
       }
 
       (function() {
-        setThingIAmDoingText(randomElement(thingsIAmDoing));
+        setRanMailAliasText(randomElement(ranMailAlias));
       })();
     </script>
     <script>
@@ -138,15 +138,15 @@
       }
 
       (function() {
-        function shuffleThingsIAmDoingInterval() {
+        function shuffleRanMailAliasTextInterval() {
           return randomAt(12, 4) * 1000;
         }
 
-        function initialShuffleThingsIAmDoingInterval() {
+        function initialshuffleRanMailAliasTextInterval() {
           return randomAt(5, 1) * 1000;
         }
 
-        function thingsIAmDoingShuffleRuntime() {
+        function ranMailAliasTextShuffleRuntime() {
           return randomAt(3, 1) * 1000;
         }
 
@@ -165,7 +165,7 @@
         }
 
         async function* streamGibberish(currentLength, targetLength) {
-          const runtime = thingsIAmDoingShuffleRuntime();
+          const runtime = ranMailAliasTextShuffleRuntime();
           const start = performance.now();
           while (performance.now() - start <= runtime) {
             const t = (performance.now() - start) / runtime;
@@ -181,35 +181,35 @@
           }
         }
 
-        async function gibberishifyThingIAmDoing(currentLength, targetLength) {
+        async function gibberishifyRanMailAlias(currentLength, targetLength) {
           for await (const gibberish of streamGibberish(
             currentLength,
             targetLength
           )) {
-            setThingIAmDoingText(gibberish);
+            setRanMailAliasText(gibberish);
           }
         }
 
-        async function shuffleThingIAmDoing() {
-          const current = $.doingThisRightNow.textContent;
+        async function shuffleRanMailAlias() {
+          const current = $.randomlyMailAlias.textContent;
           let target;
 
           do {
-            target = randomElement(thingsIAmDoing);
+            target = randomElement(ranMailAlias);
           } while (target === current);
 
-          $.doingThisRightNow.classList.add('blurry');
-          await gibberishifyThingIAmDoing(current.length, target.length);
+          $.randomlyMailAlias.classList.add('blurry');
+          await gibberishifyRanMailAlias(current.length, target.length);
 
-          setThingIAmDoingText(target);
-          $.doingThisRightNow.classList.remove('blurry');
+          setRanMailAliasText(target);
+          $.randomlyMailAlias.classList.remove('blurry');
 
-          setTimeout(shuffleThingIAmDoing, shuffleThingsIAmDoingInterval());
+          setTimeout(shuffleRanMailAlias, shuffleRanMailAliasTextInterval());
         }
 
         setTimeout(
-          shuffleThingIAmDoing,
-          initialShuffleThingsIAmDoingInterval()
+          shuffleRanMailAlias,
+          initialshuffleRanMailAliasTextInterval()
         );
       })();
     </script>
